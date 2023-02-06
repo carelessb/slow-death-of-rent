@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+
+<head>
+    <title>The slow death of rent</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        .values_container {
+            max-height: 100px;
+            overflow-y: scroll;
+        }
+
+        .garden {
+            background: #ffdd59;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 400px;
+            position: relative;
+        }
+
+        .container * {
+            position: absolute;
+        }
+
+        .house {
+            top: 50%;
+            left: 75px;
+            height: 200px;
+            width: 260px;
+            background: #FFF;
+        }
+
+        .house::before {
+            content: '';
+            position: absolute;
+            top: -95px;
+            left: 33px;
+            height: 183px;
+            width: 183.5px;
+            background: white;
+            transform: rotate(45deg);
+            border-top: 10px solid blue;
+            border-left: 10px solid blue;
+            z-index: 2
+        }
+
+        .house::after {
+            content: '';
+            position: absolute;
+            top: -70px;
+            left: 15px;
+            height: 70px;
+            width: 30px;
+            background: blue;
+            z-index: 1;
+            border-top: 7px solid rgba(0, 0, 0, .3);
+        }
+
+
+        .door {
+            bottom: 0;
+            left: 150px;
+            height: 130px;
+            width: 70px;
+            background: blue;
+            z-index: 4;
+        }
+
+        .door::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            height: 7px;
+            width: 7px;
+            border-radius: 50%;
+            border: 1px solid #FFF;
+            background: #96ebff;
+        }
+
+        .equity_in_house {
+            background-color: rgb(24, 228, 24);
+            height: 10px;
+            width: 100%;
+            bottom: 0;
+            z-index: 3;
+            padding-left: 3px;
+            color: white;
+            margin: 2px 5px 2px 0;
+            max-height: 100%;
+        }
+
+        .force_sale_percentage {
+            border-top: dashed 2px black;
+            width: 100%;
+            bottom: 0;
+            z-index: 3;
+            max-height: 100%;
+        }
+
+        #force_sale_label {
+            left: -160px;
+        }
+
+        .rent_equity {
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: lightslategrey;
+        }
+
+        .rent_equity div {
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .rent {
+            width: 95%;
+        }
+
+        .equity {
+            width: 5%;
+            background-color: rgb(24, 228, 24);
+        }
+
+        .range {
+            width: 100%;
+        }
+
+        .range input {
+            width: 100%;
+        }
+
+        
+
+        .object_instances {
+            display: flex;
+        }
+
+        
+        .object_instances > div {
+            
+            display: flex;
+            width: 33%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>The end of rent</h1>
+    <div class="values_container">
+        <label for="rent_amount">Rent amount</label><input name="rent_amount" type=text value="2000" /><br />
+        <label for="house_value">House Value</label><input name="house_value" type=text value="500000" /><br />
+        <label for="force_sale_percentage">Force sale percentage</label><input name="force_sale_percentage" type=text
+            value="80" />
+
+        <div>
+            <label for="rent_equity_1">Rent Equity year 01 - 05</label>
+            <input name="rent_equity_1" type=text value="1" />
+        </div>
+        <div>
+            <label for="rent_equity_2">Rent Equity year 05 - 10</label>
+            <input name="rent_equity_2" type=text value="2" />
+        </div>
+        <div>
+            <label for="rent_equity_3">Rent Equity year 10 - 15</label>
+            <input name="rent_equity_3" type=text value="3" />
+        </div>
+        <div>
+            <label for="rent_equity_4">Rent Equity year 15 - 20</label>
+            <input name="rent_equity_4" type=text value="5" />
+        </div>
+        <div>
+            <label for="rent_equity_5">Rent Equity year 20 - 25</label>
+            <input name="rent_equity_5" type=text value="7" />
+        </div>
+        <div>
+            <label for="rent_equity_6">Rent Equity year 25 - 30</label>
+            <input name="rent_equity_6" type=text value="10" />
+        </div>
+        <div>
+            <label for="rent_equity_7">Rent Equity year 30 - 35</label>
+            <input name="rent_equity_7" type=text value="15" />
+        </div>
+        <div>
+            <label for="rent_equity_8">Rent Equity year 35 - 40</label>
+            <input name="rent_equity_8" type=text value="20" />
+        </div>
+        <div>
+            <label for="rent_equity_9">Rent Equity year 40 - 45</label>
+            <input name="rent_equity_9" type=text value="30" />
+        </div>
+        <div>
+            <label for="rent_equity_10">Rent Equity year 45 - 50</label>
+            <input name="rent_equity_10" type=text value="50" />
+        </div>
+        <div>
+            <label for="rent_equity_11">Rent Equity year 50 - 100</label>
+            <input name="rent_equity_11" type=text value="80" />
+        </div>
+    </div>
+
+    <div class="rent_equity">
+        <div class="rent">rent</div>
+        <div class="equity"></div>
+    </div>
+
+    <div class="">
+        <div id="rent_equity_value"></div>
+    </div>
+
+    <div class='range'>
+        <input type="range" min='0' max='100' step='1' value='5' />
+        <span>year 1</span>
+    </div>
+
+    <div class="object_instances">
+        <div class=''>
+            Lyndsay<br/>
+            Liam<br/>
+            Jeff
+        </div>
+        
+        <div class=''>
+            9 The Mews<br/>
+            22 Victoria Avenue<br/>
+            35 Northbrook Avenue
+        </div>
+        
+        <div class=''>
+            Bank
+            <table class="">
+                <tr>
+                    <th >Equity</th>
+                    <th >Cash</th>
+                </tr>
+                <tr>
+                    <td>€0</td>
+                    <td>€0</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+        
+    <div class="garden">
+        <div class="container">
+            <div class="house">
+                <div class="door"></div>
+                <div class="equity_in_house"></div>
+                <div class="force_sale_percentage">
+                    <div id="force_sale_label"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+        integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $(function () {
+
+            $('.range input').on('input', function () {
+                var getValRange = $(this).val();
+                $('.range span').text('year ' + getValRange);
+                $().updateView();
+            });
+
+            
+            $.fn.updateView = function () {
+                $('.equity_in_house').updateHouseEquity();
+                $().updateForceSalePercentage();
+            };
+
+            $.fn.updateForceSalePercentage = function () {
+                let forceSalePercentageStr = $().forceSalePercentage() + '%';
+                $('.force_sale_percentage').height(forceSalePercentageStr)
+                $('#force_sale_label').text('Force sale percent: ' + forceSalePercentageStr)
+            };
+
+            $.fn.forceSalePercentage = function () {
+                return parseFloat($('[name="force_sale_percentage"]').val(), 10);
+            };
+
+            $.fn.updateHouseEquity = function () {
+                let percentageHeight = $().houseEquityPercentage()
+                this.height(percentageHeight + '%');
+            };
+
+            $.fn.houseEquityPercentage = function () {
+                let houseEquityValue = 0;
+                let startYear = 0;
+                let endYear = $().endYear();
+                let houseEquityPercentage = 0;
+
+                // add the equity value together for houseEquityValue
+                for (let year = startYear; year < endYear; year++) {
+                    // calculate the equity for each year
+                    houseEquityValue += $().houseEquity(year)
+                }
+                if (houseEquityValue != 0)
+                    houseEquityPercentage = Math.ceil(houseEquityValue / $().houseValue() * 100);
+
+                $('#rent_equity_value').text(houseEquityValue);
+                $().updateRentalEquityPercentages();
+                $().updateHouseEquityPercentage(houseEquityPercentage);
+
+
+                return houseEquityPercentage;
+            };
+
+
+            $.fn.updateHouseEquityPercentage = function (houseEquityPercentage) {
+                let houseEquityPercentageLabel = "";
+                if (houseEquityPercentage > 10) {
+                    houseEquityPercentageLabel = 'House equity: ' + parseInt(houseEquityPercentage, 10) +
+                        '%';
+                }
+                $('.equity_in_house').text(houseEquityPercentageLabel);
+            };
+
+            $.fn.updateRentalEquityPercentages = function (houseEquityValue) {
+                let endYear = $().endYear();
+                let rentEquityPercentage = $().rentPercentage(endYear);
+                let equityPercentage = rentEquityPercentage + '%';
+                let rentPercentage = (100 - rentEquityPercentage) + '%';
+                $('.equity').width(equityPercentage).text(equityPercentage);
+                $('.rent').width(rentPercentage).text('Rent: ' + rentPercentage);
+            };
+
+            $.fn.endYear = function (percentageHeight) {
+                return parseFloat($('.range input').val(), 10);
+            };
+
+            $.fn.houseEquity = function (year) {
+                let rent = $().rentAmount();
+                let house_value = $().houseValue();
+                let rentEquityPercentage = $().rentPercentage(year);
+                let monthlyEquity = rent * rentEquityPercentage / 100;
+                let yearlyEquity = monthlyEquity * 12;
+                return yearlyEquity;
+            };
+
+
+            $.fn.rentPercentage = function (year) {
+                let rangeObj = $().range(year);
+                if (typeof (rangeObj) == "undefined") {
+                    console.log(year)
+                }
+                return parseFloat($('[name="' + rangeObj.rangeName + '"]').val(), 10);
+            };
+
+            $.fn.rentAmount = function () {
+                return parseFloat($('[name="rent_amount"]').val(), 10);
+            };
+
+            $.fn.houseValue = function () {
+                return parseFloat($('[name="house_value"]').val(), 10);
+            };
+
+            $.fn.range = function (year) {
+                let equityYearRanges = $().equityYearRanges();
+                for (let i = 0; i < equityYearRanges.length; i++) {
+                    if (equityYearRanges[i].startYear <= year && equityYearRanges[i].endYear > year) {
+                        return equityYearRanges[i];
+                    }
+                }
+                return equityYearRanges[equityYearRanges.length - 1];
+            };
+
+            $.fn.equityYearRanges = function () {
+                return [{
+                        startYear: 0,
+                        endYear: 5,
+                        rangeName: "rent_equity_1"
+                    },
+                    {
+                        startYear: 5,
+                        endYear: 10,
+                        rangeName: "rent_equity_2"
+                    },
+                    {
+                        startYear: 10,
+                        endYear: 15,
+                        rangeName: "rent_equity_3"
+                    },
+                    {
+                        startYear: 15,
+                        endYear: 20,
+                        rangeName: "rent_equity_4"
+                    },
+                    {
+                        startYear: 20,
+                        endYear: 25,
+                        rangeName: "rent_equity_5"
+                    },
+                    {
+                        startYear: 25,
+                        endYear: 30,
+                        rangeName: "rent_equity_6"
+                    },
+                    {
+                        startYear: 30,
+                        endYear: 35,
+                        rangeName: "rent_equity_7"
+                    },
+                    {
+                        startYear: 35,
+                        endYear: 40,
+                        rangeName: "rent_equity_8"
+                    },
+                    {
+                        startYear: 40,
+                        endYear: 45,
+                        rangeName: "rent_equity_9"
+                    },
+                    {
+                        startYear: 45,
+                        endYear: 50,
+                        rangeName: "rent_equity_10"
+                    },
+                    {
+                        startYear: 50,
+                        endYear: 100,
+                        rangeName: "rent_equity_11"
+                    },
+                ]
+            };
+            
+            $().updateView();
+
+
+        });
+    </script>
+
+
+
+</body>
+
+</html>
